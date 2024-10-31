@@ -3,10 +3,10 @@ Contributors: thehowarde
 Donate link: https://www.duckdiverllc.com
 Tags: owl carousel 2, post slider, product slider, image carousel, post carousel, reviews carousel
 Requires at least: 4.5
-Tested up to: 6.4
+Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 1.4.9
-WC tested up to: 8.0
+Stable tag: 1.4.11
+WC tested up to: 9.0
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 

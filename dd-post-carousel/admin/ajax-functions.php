@@ -12,7 +12,6 @@ class Owl_Carousel_2_Admin_Ajax {
 		add_action( 'wp_ajax_owl_carousel_tax', array( $this, 'owl_carousel_tax' ) );
 		add_action( 'wp_ajax_owl_carousel_terms', array( $this, 'owl_carousel_terms' ) );
 		add_action( 'wp_ajax_owl_carousel_posts', array( $this, 'owl_carousel_posts' ) );
-		add_action( 'wp_ajax_dd_owl_get_image', array( $this, 'dd_owl_get_image' ) );
 
 	}
 
@@ -37,7 +36,7 @@ class Owl_Carousel_2_Admin_Ajax {
 		$tax_objects = get_object_taxonomies( $post_type, 'objects' );
 
 		if ( empty( $tax_objects ) ) {
-			$html .= '<span class="no-cats">' . __( 'There are no matching Taxonomies', 'owl-carousel-2' ) . '</span>';
+			$html .= '<span class="no-cats">' . __( 'There are no matching Taxonomies', 'dd-post-carousel' ) . '</span>';
 		} else {
 			$html .= '<select id="dd_owl_post_taxonomy_type" name="dd_owl_post_taxonomy_type" class="dd_owl_post_taxonomy_type_field">';
 
@@ -78,15 +77,15 @@ class Owl_Carousel_2_Admin_Ajax {
 
 		$tax_objects = get_object_taxonomies( $post_type, 'objects' );
 
-		$term_objects = ( isset( $_POST['taxtype'] ) ) ? get_terms( sanitize_text_field( wp_unslash( $_POST['taxtype'] ) ), 'objects' ) : null;
+		$term_objects = ( isset( $_POST['taxtype'] ) ) ? get_terms( sanitize_text_field( wp_unslash( $_POST['taxtype'] ) ) ) : null;
 
 		$theterm = get_post_meta( sanitize_text_field( wp_unslash( $_POST['postid'] ) ), 'dd_owl_post_taxonomy_term', true );
 
 		if ( null === $tax_objects || is_wp_error( $term_objects ) ) {
-			$html .= '<span class="no-cats">' . __( 'There are no matching terms', 'owl-carousel-2' ) . '</span>';
+			$html .= '<span class="no-cats">' . __( 'There are no matching terms', 'dd-post-carousel' ) . '</span>';
 		} else {
 			if ( null === $term_objects ) {
-				$html .= '<span class="no-cats">' . __( 'There are no matching terms', 'owl-carousel-2' ) . '</span>';
+				$html .= '<span class="no-cats">' . __( 'There are no matching terms', 'dd-post-carousel' ) . '</span>';
 			} else {
 				$html .= '<select id="dd_owl_post_taxonomy_term" name="dd_owl_post_taxonomy_term[]" multiple="multiple" class="dd-owl-multi-select">';
 				if ( ! in_array( $theterm, $term_objects, true ) || $term_objects->errors ) {
@@ -150,20 +149,5 @@ class Owl_Carousel_2_Admin_Ajax {
 		}
 		wp_send_json( $html );
 		die();
-	}
-
-	/**
-	 * Get the image
-	 */
-	public function dd_owl_get_image() {
-		if ( isset( $_GET['id'] ) ) {
-			$image = wp_get_attachment_image( filter_input( INPUT_GET, 'id', FILTER_VALIDATE_INT ), 'medium', false, array( 'id' => 'dd-preview-image' ) );
-			$data  = array(
-				'image' => $image,
-			);
-			wp_send_json_success( $data );
-		} else {
-			wp_send_json_error();
-		}
 	}
 }

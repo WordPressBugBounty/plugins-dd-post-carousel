@@ -70,7 +70,7 @@ class Owl_Carousel_2 {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'owl-carousel-2';
+		$this->plugin_name = 'dd-post-carousel';
 
 		$this->load_dependencies();
 		$this->set_locale();

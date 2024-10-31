@@ -66,7 +66,6 @@ class Owl_Carousel_2_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-
 	}
 
 	/**
@@ -102,7 +101,7 @@ class Owl_Carousel_2_Public {
 		wp_enqueue_script( 'owl-two' );
 		wp_enqueue_style( 'owl-carousel-css' );
 		wp_enqueue_style( 'owl-theme-css' );
-		wp_enqueue_style( 'owl-carousel-2' );
+		wp_enqueue_style( 'dd-post-carousel' );
 		$atts = shortcode_atts(
 			array(
 				'id' => '',
@@ -121,6 +120,9 @@ class Owl_Carousel_2_Public {
 			$this->meta['excerpt_more'] = '';
 		}
 
+		// Set Default Args.
+		$orderby = 'date';
+		$order   = 'DESC';
 		if ( 'lightbox' === $this->meta['image_options'] ) {
 			wp_enqueue_script( 'dd-featherlight' );
 		}
@@ -155,8 +157,7 @@ class Owl_Carousel_2_Public {
 					'post_type' => $this->meta['post_type'],
 					'post__in'  => $posts,
 				);
-			} //if it's featured products.
-			elseif ( 'featured_product' === $this->meta['tax_options'] ) {
+			} elseif ( 'featured_product' === $this->meta['tax_options'] ) { // if it's featured products.
 				$tax_query[] = array(
 					'taxonomy' => 'product_visibility',
 					'field'    => 'name',
@@ -168,8 +169,7 @@ class Owl_Carousel_2_Public {
 					'post_type'   => 'product',
 					'tax_query'   => $tax_query,
 				);
-			} // if it's product type by tax.
-			elseif ( 'product' === $this->meta['post_type'] && 'taxonomy' === $this->meta['tax_options'] ) {
+			} elseif ( 'product' === $this->meta['post_type'] && 'taxonomy' === $this->meta['tax_options'] ) { // if it's product type by tax.
 				$args = array(
 					'post_type' => array( 'product' ),
 					'tax_query' => array(
@@ -198,8 +198,7 @@ class Owl_Carousel_2_Public {
 					'tax_query' => $tax_query,
 				);
 
-			} // if is Show Only Tax.
-			else {
+			} else { // if is Show Only Tax.
 				// WP_Query arguments.
 				$args = array(
 					'post_type'   => array( $this->meta['post_type'] ),
@@ -580,7 +579,7 @@ class Owl_Carousel_2_Public {
 
 				$output .= sprintf( '<div class="item" id="review" data-comment="%s">', $comment->comment_ID );
 				/* translators: %s: rating */
-				$label = sprintf( __( 'Rated %s out of 5', 'owl-carousel-2' ), $rating );
+				$label = sprintf( __( 'Rated %s out of 5', 'dd-post-carousel' ), $rating );
 
 				$output .= '<div class="review-head">';
 
@@ -601,13 +600,13 @@ class Owl_Carousel_2_Public {
 					' <a href="' . esc_url( get_permalink( $product['ID'] ) ) . '#comment-' . $comment->comment_ID . '">' . $this->meta['excerpt_more'] . '</a></p>';
 
 				if ( $this->meta['show_product'] ) {
-					$output .= '<div class="review-product">' . __( 'Product Reviewed', 'owl-carousel-2' ) . ': <a href="' . esc_url( get_permalink( $product['ID'] ) ) . '">' . $product['post_title'] . '</a></div>';
+					$output .= '<div class="review-product">' . __( 'Product Reviewed', 'dd-post-carousel' ) . ': <a href="' . esc_url( get_permalink( $product['ID'] ) ) . '">' . $product['post_title'] . '</a></div>';
 				}
 
 				$output .= '</div>';
 			}
 		} else {
-			$output .= __( 'There are no reviews for this carousel', 'owl-carousel-2' );
+			$output .= __( 'There are no reviews for this carousel', 'dd-post-carousel' );
 		}
 		$output .= '</div></div>';
 		return $output;
@@ -678,6 +677,5 @@ class Owl_Carousel_2_Public {
 		$this->meta['items_width4'] = intval( get_post_meta( $this->carousel_id, 'dd_owl_items_width4', true ) );
 		$this->meta['items_width5'] = intval( get_post_meta( $this->carousel_id, 'dd_owl_items_width5', true ) );
 		$this->meta['items_width6'] = intval( get_post_meta( $this->carousel_id, 'dd_owl_items_width6', true ) );
-
 	}
 }

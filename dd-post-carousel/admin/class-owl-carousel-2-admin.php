@@ -59,19 +59,19 @@ class Owl_Carousel_2_Admin {
 
 	public static function add_carousel_cpt() {
 		$labels = array(
-			'name'               => _x( 'Carousels', 'post type general name' ),
-			'singular_name'      => _x( 'Carousel', 'post type singular name' ),
-			'menu_name'          => _x( 'Carousels', 'admin menu' ),
-			'name_admin_bar'     => _x( 'Carousel', 'add new on admin bar' ),
-			'add_new'            => _x( 'Add New', 'Carousel' ),
-			'add_new_item'       => __( 'Add New Carousel Item' ),
-			'new_item'           => __( 'New Carousel' ),
-			'edit_item'          => __( 'Edit Carousel' ),
-			'view_item'          => __( 'View Carousels' ),
-			'all_items'          => __( 'All Carousels' ),
-			'search_items'       => __( 'Search Carousels' ),
-			'not_found'          => __( 'No Carousel item found.' ),
-			'not_found_in_trash' => __( 'No Carousel items found in Trash.' ),
+			'name'               => _x( 'Carousels', 'post type general name', 'dd-post-carousel' ),
+			'singular_name'      => _x( 'Carousel', 'post type singular name', 'dd-post-carousel' ),
+			'menu_name'          => _x( 'Carousels', 'admin menu', 'dd-post-carousel' ),
+			'name_admin_bar'     => _x( 'Carousel', 'add new on admin bar', 'dd-post-carousel' ),
+			'add_new'            => _x( 'Add New', 'Carousel', 'dd-post-carousel' ),
+			'add_new_item'       => __( 'Add New Carousel Item', 'dd-post-carousel' ),
+			'new_item'           => __( 'New Carousel', 'dd-post-carousel' ),
+			'edit_item'          => __( 'Edit Carousel', 'dd-post-carousel' ),
+			'view_item'          => __( 'View Carousels', 'dd-post-carousel' ),
+			'all_items'          => __( 'All Carousels', 'dd-post-carousel' ),
+			'search_items'       => __( 'Search Carousels', 'dd-post-carousel' ),
+			'not_found'          => __( 'No Carousel item found.', 'dd-post-carousel' ),
+			'not_found_in_trash' => __( 'No Carousel items found in Trash.', 'dd-post-carousel' ),
 		);
 
 		register_post_type(
@@ -107,7 +107,6 @@ class Owl_Carousel_2_Admin {
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/owl-carousel-2-admin.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'Select2-Style', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), '4.0.5', 'all' );
 		}
-
 	}
 
 	/**
@@ -115,7 +114,6 @@ class Owl_Carousel_2_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-
 	public function enqueue_scripts() {
 		$handle = 'select2.js';
 		$list   = 'enqueued';
@@ -139,8 +137,8 @@ class Owl_Carousel_2_Admin {
 				'dd-owl-admin',
 				'dd_owl_admin_script',
 				array(
-					'select_images' => __( 'Select Carousel Images', 'owl-carousel-2' ),
-					'insert_images' => __( 'Insert Images', 'owl-carousel-2' ),
+					'select_images' => __( 'Select Carousel Images', 'dd-post-carousel' ),
+					'insert_images' => __( 'Insert Images', 'dd-post-carousel' ),
 					'nonce'         => wp_create_nonce( 'dd_admin_ajax' ),
 				)
 			);
@@ -170,12 +168,11 @@ class Owl_Carousel_2_Admin {
 
 		// output for the 'Shortcode' column.
 		if ( 'shortcode' === $column ) {
-			echo sprintf( '<span class="shortcode owl-carousel-2"><input type="text" onfocus="this.select();" readonly="readonly" value="[dd-owl-carousel id=&quot;%1$s&quot;]" title="%1$s" class="large-text code"></span>', esc_attr( $post->ID ) );
+			printf( '<span class="shortcode owl-carousel-2"><input type="text" onfocus="this.select();" readonly="readonly" value="[dd-owl-carousel id=&quot;%1$s&quot;]" title="%1$s" class="large-text code"></span>', esc_attr( $post->ID ) );
 		}
 
 		if ( 'css-id' === $column ) {
 			echo esc_html( '#' . $dd_owl_css_id );
 		}
 	}
-
 }
