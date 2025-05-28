@@ -5,7 +5,7 @@ Tags: owl carousel 2, post slider, product slider, image carousel, post carousel
 Requires at least: 4.5
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 1.4.11
+Stable tag: 1.4.12
 WC tested up to: 9.0
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
@@ -140,6 +140,9 @@ function my_filter_owl_carousel_script($script, $carousel_id){
 4. Public Large Desktop View. With Featured Image and CTA Link to item.
 
 == Changelog ==
+
+= 1.4.12 =
+Fix featherlight.js to prevent XSS being passed through the data-featherlight param. Fixes CVE-2024-5667
 
 = 1.4.6 =
 Various fixes for sanitiziation filters.

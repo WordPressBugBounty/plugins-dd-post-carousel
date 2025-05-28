@@ -167,12 +167,12 @@ class Owl_Carousel_2_Public {
 				$args        = array(
 					'post_status' => 'publish',
 					'post_type'   => 'product',
-					'tax_query'   => $tax_query,
+					'tax_query'   => $tax_query, //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 				);
 			} elseif ( 'product' === $this->meta['post_type'] && 'taxonomy' === $this->meta['tax_options'] ) { // if it's product type by tax.
 				$args = array(
 					'post_type' => array( 'product' ),
-					'tax_query' => array(
+					'tax_query' => array( //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 						'relation' => 'AND',
 						array(
 							'taxonomy' => 'product_cat',
@@ -361,7 +361,7 @@ class Owl_Carousel_2_Public {
 
 		$prev = apply_filters( 'dd_carousel_filter_prev', $this->meta['prev'], $this->carousel_id );
 		$next = apply_filters( 'dd_carousel_filter_next', $this->meta['next'], $this->carousel_id );
-		// Output the Script
+		// Output the Script.
 		$owl_script = '
         jQuery("#' . esc_js( $this->meta['css_id'] ) . '").owlCarousel({
             "loop":' . esc_js( $this->meta['loop'] ) . ',
@@ -454,7 +454,8 @@ class Owl_Carousel_2_Public {
 			}
 			if ( $use_caption ) {
 				$the_caption  = '<div class="dd-owl-image-caption">';
-				$the_caption .= ( false !== ( $caption = wp_get_attachment_caption( $image_id ) ) ) ? $caption : '';
+				$caption      = wp_get_attachment_caption( $image_id );
+				$the_caption .= ( false !== $caption ) ? $caption : '';
 				$the_caption .= '</div>';
 				/**
 				 * Filters the Caption Output
@@ -464,7 +465,7 @@ class Owl_Carousel_2_Public {
 				 * @param string $the_caption The caption created
 				 * @param string $caption the `wp_get_attachment_caption` - Caption.
 				 */
-				$output .= apply_filters( 'dd_carousel_filter_caption', $the_caption, $caption );
+				$output .= apply_filters( 'dd_carousel_filter_caption', wp_kses_post( $the_caption ), $caption );
 			}
 			$output .= '</div>';
 		}
@@ -516,7 +517,7 @@ class Owl_Carousel_2_Public {
 		if ( in_array( $img_atts['options'], array( 'link', 'lightbox' ), true ) ) {
 			if ( 'lightbox' === $img_atts['options'] ) {
 				$lightbox_image = wp_get_attachment_image_src( $thumb, 'large' );
-				$class          = 'data-featherlight="' . $lightbox_image[0] . '" class="lightbox"';
+				$class          = 'data-featherlight="' . esc_url( $lightbox_image[0] ) . '" class="lightbox"';
 			} else {
 				$class = 'class="linked-image"';
 			}

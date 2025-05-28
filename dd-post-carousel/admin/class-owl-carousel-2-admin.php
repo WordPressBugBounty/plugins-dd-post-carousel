@@ -102,7 +102,7 @@ class Owl_Carousel_2_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		// Only Enqueue Style on Edit Pages
+		// Only Enqueue Style on Edit Pages.
 		if ( 'owl-carousel' === get_post_type() ) {
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/owl-carousel-2-admin.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'Select2-Style', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), '4.0.5', 'all' );
@@ -158,8 +158,14 @@ class Owl_Carousel_2_Admin {
 		);
 		return array_slice( $columns, 0, 2, true ) + $new_columns + array_slice( $columns, 2, null, true );
 	}
-
-	// DEFINE OUTPUT FOR EACH CUSTOM COLUMN DISPLAYED FOR THIS CUSTOM POST TYPE WITHIN THE DASHBOARD.
+	
+	/**
+	 * Handles the custom column content for the owl carousel in a table row.
+	 *
+	 * @param string $column The name of the current column being rendered.
+	 *
+	 * @return void Outputs the appropriate content for the 'shortcode' or 'css-id' column.
+	 */
 	public function owl_carousel_custom_column_content( $column ) {
 		// get post object for this row.
 		global $post;
