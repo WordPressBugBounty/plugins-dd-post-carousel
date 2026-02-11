@@ -3,7 +3,7 @@ Contributors: thehowarde
 Donate link: https://www.duckdiverllc.com
 Tags: owl carousel 2, post slider, product slider, image carousel, post carousel, reviews carousel
 Requires at least: 4.5
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.0
 Stable tag: 1.4.12
 WC tested up to: 9.0
